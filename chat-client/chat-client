@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export TERM=xterm-256color
+
+exec python3 /opt/chat/chat-client.py "$1"
