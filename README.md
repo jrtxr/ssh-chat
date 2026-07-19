@@ -42,14 +42,6 @@ Mensagem privada:
 !bruce Hellow
 ```
 
-Consulta de status:
-
-```text
-/getstatus clark
-
-[SISTEMA] clark está [studying]
-```
-
 ---
 
 # Comandos
@@ -57,10 +49,9 @@ Consulta de status:
 | Comando                | Descrição             |
 | ---------------------- | --------------------- |
 | `/help`                | Exibe ajuda           |
-| `/online`              | Lista usuários online |
-| `/setstatus <texto>`   | Define status         |
-| `/cleanstatus`         | Remove status         |
-| `/getstatus <usuario>` | Consulta status       |
+| `/on`                  | Lista usuários online |
+| `/setstt <texto>`      | Define status         |
+| `/cleanstt`            | Remove status         |
 | `!usuario mensagem`    | Mensagem privada      |
 | `@usuario`             | Menção                |
 

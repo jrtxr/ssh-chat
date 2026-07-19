@@ -150,7 +150,7 @@ def handle_client(conn):
 
             message_rate[nickname].append(now)
 
-            if msg.lower() == "/online":
+            if msg.lower() == "/on":
 
                 send_online_list(
                     conn
@@ -199,19 +199,16 @@ def handle_client(conn):
             if status:
 
                 final_msg = (
-                    f"[{timestamp()}] "
-                    f"{color}[{nickname}]"
-                    f"{RESET} "
-                    f"[{status}] "
+                    f"[{timestamp()}]"
+                    f"({status}){color}[{nickname}]{RESET}: "
                     f"{msg}"
                 )
 
             else:
 
                 final_msg = (
-                    f"[{timestamp()}] "
-                    f"{color}[{nickname}]"
-                    f"{RESET} "
+                    f"[{timestamp()}]"
+                    f"{color}[{nickname}]:{RESET} "
                     f"{msg}"
                 )
 

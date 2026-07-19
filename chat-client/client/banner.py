@@ -67,16 +67,15 @@ def show_banner(nickname):
         f"{YELLOW}Comandos:{RESET}"
     )
 
-    print("  /online ----------> Ver usuários online")
-    print("  /help ------------> Ver comandos")
-    print("  /sair ------------> Sair do chat")
+    print("  /on ----------> Ver usuários online")
+    print("  /help --------> Ver comandos")
+    print("  /s -----------> Sair do chat")
     print()
-    print("  /setstatus -------> adicionar um status")
-    print("  /getstatus user --> ver status de um usuário")
-    print("  /cleanstatus -----> limpar status")
+    print("  /setstt ------> adicionar um status")
+    print("  /cleanstt ----> limpar status")
     print()
-    print("  @user ------------> Mencionar usuário")
-    print("  !user texto ------> Mensagem privada")
+    print("  @user --------> Mencionar usuário")
+    print("  !user texto --> Mensagem privada")
 
     print()
 

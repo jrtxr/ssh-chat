@@ -6,16 +6,19 @@ def show_help(conn):
     send_to(
         conn,
         """
+        
+==========================================================
 Comandos:
-  /online ---------------> ver quem está online
-  /help -----------------> ver comandos
-  /sair -----------------> sair
+  /on -------------> ver quem está online
+  /help -----------> ver comandos
+  /s --------------> sair
 
-  /setstatus <text> ----> adicionar status
-  /getstatus <user> ----> ver status de um usuário específico
-  /cleanstatus ---------> limpar status
+  /setstt <text> --> adicionar status
+  /cleanstt -------> limpar status
 
-  @user mensagem -------> mencionar usuário
-  !user mensagem -------> enviar mensagem privada
+  @user mensagem --> mencionar usuário
+  !user mensagem --> enviar mensagem privada
+==========================================================
+
         """
     )

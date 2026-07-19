@@ -28,7 +28,7 @@ def start_prompt(
             continue
 
         if msg.lower() in (
-            "/sair",
+            "/s",
             "/quit",
             "/exit"
         ):

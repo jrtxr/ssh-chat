@@ -407,28 +407,23 @@ A alteração terá efeito na próxima conexão.
 Exibe ajuda.
 
 ```text
-/online
+/on
 ```
 
 Lista usuários online.
 
 ```text
-/setstatus estudando
+/setstt estudando
 ```
 
 Define um status.
 
 ```text
-/cleanstatus
+/cleanstt
 ```
 
 Remove o status.
 
-```text
-/getstatus usuario
-```
-
-Consulta o status de outro usuário.
 
 ```text
 !usuario mensagem

@@ -13,7 +13,8 @@ def send_online_list(conn):
             clients.values()
         )
 
-    msg = "\nUsuários online:\n"
+    msg = "==================================================\n"
+    msg += "\nUsuários online:\n"
 
     for user in users:
 
@@ -31,6 +32,8 @@ def send_online_list(conn):
             f" \033[92m●\033[0m "
             f"{color}[{user}]{RESET}{msgStatus}\n"
         )
+
+    msg += "\n==================================================\n"
 
     send_to(
         conn,

@@ -12,11 +12,11 @@ def handle_status_command(
     lower = msg.lower()
 
     if lower.startswith(
-        "/setstatus "
+        "/setstt "
     ):
 
         status = msg[
-            len("/setstatus "):
+            len("/setstt "):
         ].strip()
 
         user_status[
@@ -26,13 +26,13 @@ def handle_status_command(
         send_to(
             conn,
             system_message(
-                f"Status definido para: {status}"
+                f"status modificado ({status})"
             )
         )
 
         return True
 
-    if lower == "/cleanstatus":
+    if lower == "/cleanstt":
 
         user_status.pop(
             nickname,
@@ -45,38 +45,6 @@ def handle_status_command(
                 "Status removido."
             )
         )
-
-        return True
-
-    if lower.startswith(
-        "/getstatus "
-    ):
-
-        target = msg[
-            len("/getstatus "):
-        ].strip()
-
-        status = user_status.get(
-            target
-        )
-
-        if status:
-
-            send_to(
-                conn,
-                system_message(
-                    f"{target} está [{status}]"
-                )
-            )
-
-        else:
-
-            send_to(
-                conn,
-                system_message(
-                    f"{target} não possui status."
-                )
-            )
 
         return True
 

@@ -49,7 +49,7 @@ def handle_private_message(
 
         send_to(
             sender_conn,
-            f"[SISTEMA] Usuário '{target}' não está online."
+            f"[SISTEMA]: Usuário '{target}' não está online."
         )
 
         return

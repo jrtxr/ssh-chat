@@ -65,9 +65,9 @@ def broadcast(
 def system_message(text):
 
     return (
-        f"[{timestamp()}] "
+        f"[{timestamp()}]"
         f"{SYSTEM_COLOR}"
-        f"[SISTEMA]"
+        f"[SISTEMA]:"
         f"{RESET} "
         f"{text}"
     )
