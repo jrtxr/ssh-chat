@@ -1,5 +1,8 @@
 from core.clients import clients, lock
 from utils.messages import send_to
+from core.status import get_user_status
+from core.colors import get_user_color
+from config import (RESET)
 
 
 def send_online_list(conn):
@@ -14,9 +17,19 @@ def send_online_list(conn):
 
     for user in users:
 
+        status = get_user_status(user)        
+        if status:
+            msgStatus = f"({status})"
+        else:
+            msgStatus = ''
+
+        color = get_user_color(
+            user
+        )
+
         msg += (
             f" \033[92m●\033[0m "
-            f"{user}\n"
+            f"{color}[{user}]{RESET}{msgStatus}\n"
         )
 
     send_to(
