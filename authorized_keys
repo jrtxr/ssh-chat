@@ -1,0 +1,12 @@
+# Exemplos de authorized_keys
+
+#user: user1
+command="/opt/chat/chat-client user1",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 CHAVE_PUBLICA_AQUI
+
+# Usuário: user2
+command="/opt/chat/chat-client user2",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 CHAVE_PUBLICA_AQUI
+
+
+ .
+ .
+ .
