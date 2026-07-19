@@ -2,28 +2,67 @@
 
 Chat multiusuário via SSH escrito em Python.
 
-Cada usuário se conecta utilizando sua própria chave SSH e entra automaticamente no chat com um nickname previamente definido pelo administrador do servidor.
+O projeto permite que usuários entrem em uma sala de conversa utilizando apenas uma conexão SSH autenticada por chave pública.
 
-O projeto é dividido em dois componentes:
-
-* `chat-server/` → servidor responsável por gerenciar conexões, histórico, usuários online, mensagens privadas e status.
-* `chat-client/` → cliente executado automaticamente após a autenticação SSH.
+Cada chave SSH pode ser associada a um nickname fixo definido pelo administrador do servidor.
 
 ---
 
-# Funcionalidades
+# Características
 
-* Login utilizando chave SSH
-* Nickname fixo por usuário
-* Lista de usuários online
+* Autenticação por chave pública SSH
+* Nicknames controlados pelo administrador
 * Mensagens privadas
-* Menções com `@usuario`
+* Menções de usuários
 * Status personalizados
 * Histórico de mensagens
+* Cores automáticas por usuário
+* Rate limit anti-spam
 * Limite de tamanho de mensagem
-* Rate limit (proteção contra spam)
-* Limite máximo de usuários simultâneos
-* Limpeza automática do estado quando o último usuário sai
+* Execução automática via OpenSSH
+* Compatível com Linux, VPS e servidores dedicados
+
+---
+
+# Demonstração
+
+```text
+[12:30] [SISTEMA] clark entrou
+
+[clark] [studying] Hi guys
+
+[parker] Hi
+
+[bruce] welcome
+```
+
+Mensagem privada:
+
+```text
+!bruce Hellow
+```
+
+Consulta de status:
+
+```text
+/getstatus clark
+
+[SISTEMA] clark está [studying]
+```
+
+---
+
+# Comandos
+
+| Comando                | Descrição             |
+| ---------------------- | --------------------- |
+| `/help`                | Exibe ajuda           |
+| `/online`              | Lista usuários online |
+| `/setstatus <texto>`   | Define status         |
+| `/cleanstatus`         | Remove status         |
+| `/getstatus <usuario>` | Consulta status       |
+| `!usuario mensagem`    | Mensagem privada      |
+| `@usuario`             | Menção                |
 
 ---
 
@@ -33,7 +72,6 @@ O projeto é dividido em dois componentes:
 chat/
 ├── chat-client/
 │   ├── chat-client.py
-│   ├── config.py
 │   └── client/
 │       ├── banner.py
 │       ├── connection.py
@@ -43,19 +81,20 @@ chat/
 └── chat-server/
     ├── chat-server.py
     ├── config.py
+│
     ├── commands/
-    │   ├── help.py
-    │   ├── online.py
-    │   ├── private.py
-    │   └── status.py
-    │
+│       ├── help.py
+│       ├── online.py
+│       ├── private.py
+│       └── status.py
+│
     ├── core/
-    │   ├── cleanup.py
-    │   ├── clients.py
-    │   ├── colors.py
-    │   ├── history.py
-    │   └── status.py
-    │
+│       ├── cleanup.py
+│       ├── clients.py
+│       ├── colors.py
+│       ├── history.py
+│       └── status.py
+│
     └── utils/
         ├── messages.py
         └── timeutils.py
@@ -63,196 +102,48 @@ chat/
 
 ---
 
-# Requisitos
-
-Servidor Linux com:
-
-* Python 3.11+
-* OpenSSH Server
-
-Instalação das dependências:
-
-```bash
-pip install prompt_toolkit
-```
-
----
-
-# Configuração do Servidor
-
-Edite:
-
-```text
-chat-server/config.py
-```
-
-Exemplo:
-
-```python
-HOST = "127.0.0.1"
-PORT = 9000
-
-MAX_CLIENTS = 10
-MAX_MESSAGE_LENGTH = 1000
-```
-
----
-
-# Executando o Servidor
-
-Entre na pasta:
-
-```bash
-cd chat-server
-```
-
-Execute:
-
-```bash
-python3 chat-server.py
-```
-
-Saída esperada:
-
-```text
-Chat iniciado em 127.0.0.1:9000
-```
-
----
-
-# Configuração do Cliente
-
-Edite:
-
-```text
-chat-client/config.py
-```
-
-Exemplo:
-
-```python
-HOST = "127.0.0.1"
-PORT = 9000
-```
-
----
-
-# Executando o Cliente
-
-Para testes locais:
-
-```bash
-python3 chat-client.py user1
-```
-
----
-
-# Integração com SSH
-
-O método recomendado é utilizar um usuário dedicado ao chat.
-
-Exemplo:
-
-```bash
-useradd -m chat
-```
-
-Crie:
-
-```text
-/home/chat/.ssh/authorized_keys
-```
-
-Cada chave pública deve possuir um comando forçado.
-
-Exemplo:
-
-```text
-command="/opt/chat/chat-client user1" ssh-ed25519 AAAA...
-```
-
-Quando o usuário autenticar via SSH, o cliente será iniciado automaticamente.
-
-O nickname não é escolhido pelo usuário. Ele é definido pelo administrador através do `authorized_keys`.
-
----
-
-# Comandos Disponíveis
-
-### Ver usuários online
-
-```text
-/online
-```
-
-### Exibir ajuda
-
-```text
-/help
-```
-
-### Sair
-
-```text
-/sair
-```
-
-### Definir status
-
-```text
-/setstatus estudando
-```
-
-### Consultar status
-
-```text
-/getstatus user1
-```
-
-### Remover status
-
-```text
-/cleanstatus
-```
-
-### Mensagem privada
-
-```text
-!usuario mensagem
-```
-
-### Menção
-
-```text
-@usuario
-```
-
----
-
 # Segurança
 
-Recomendações:
+O projeto foi desenvolvido para operar atrás do OpenSSH.
 
-* Utilizar apenas autenticação por chave pública.
-* Desabilitar autenticação por senha no SSH.
-* Desabilitar login root.
-* Utilizar usuário dedicado ao chat.
-* Utilizar comandos forçados no `authorized_keys`.
-* Utilizar:
+Recursos implementados:
 
-  * no-port-forwarding
-  * no-X11-forwarding
-  * no-agent-forwarding
-  * no-pty
+* Autenticação por chave pública
+* Nickname fixo definido pelo servidor
+* Limite de mensagens por segundo
+* Limite de tamanho de mensagem
+* Restrições de SSH através de `authorized_keys`
+* Limite máximo de conexões simultâneas
+* Timeout de conexão configurável
 
-Exemplo:
+---
+
+# Requisitos
+
+* Python 3.10+
+* OpenSSH Server
+* Linux
+
+---
+
+# Instalação
+
+Consulte:
 
 ```text
-command="/opt/chat/chat-client user1",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAA...
+SETUP.md
 ```
+
+O arquivo contém o processo completo de instalação, configuração do OpenSSH, systemd e deploy em produção.
 
 ---
 
 # Licença
 
-Projeto distribuído para fins educacionais e experimentais.
+MIT License
+
+```
+```
+
+# SSH Chat
+PARA REALIZAR A INSTALAÇÃO LEIA O SETUP.md
